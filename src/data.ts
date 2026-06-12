@@ -260,6 +260,8 @@ function seed(): DB {
     details: 'Please have the pool vendor follow up on the low water level from the last visit.',
     status: 'acknowledged',
     createdAt: daysFromNow(-4),
+    photos: [{ id: uid(), caption: 'Pool water level', dataUrl: ph('#16477c', 'Reference photo') }],
+    completionPhotos: [],
   }
 
   return {
@@ -492,7 +494,13 @@ export function completeVisit(visitId: string, summary: string) {
 }
 
 // Concierge requests
-export function createRequest(propertyId: string, ownerName: string, category: string, details: string) {
+export function createRequest(
+  propertyId: string,
+  ownerName: string,
+  category: string,
+  details: string,
+  photos: Photo[] = []
+) {
   const req: ConciergeRequest = {
     id: uid(),
     propertyId,
@@ -501,6 +509,8 @@ export function createRequest(propertyId: string, ownerName: string, category: s
     details,
     status: 'new',
     createdAt: now(),
+    photos,
+    completionPhotos: [],
   }
   save({ ...db, requests: [req, ...db.requests] })
   return pushNotification({
@@ -509,6 +519,25 @@ export function createRequest(propertyId: string, ownerName: string, category: s
     body: `${ownerName}: ${category}`,
     url: '/pro/requests',
   })
+}
+
+// Tech attaches a photo of the finished work; notify the owner.
+export function addCompletionPhoto(requestId: string, photo: Omit<Photo, 'id'>) {
+  const req = db.requests.find((r) => r.id === requestId)
+  save({
+    ...db,
+    requests: db.requests.map((r) =>
+      r.id === requestId ? { ...r, completionPhotos: [...r.completionPhotos, { ...photo, id: uid() }] } : r
+    ),
+  })
+  if (req) {
+    pushNotification({
+      to: 'owner',
+      title: 'Photo added to your request',
+      body: `A photo of the finished "${req.category}" is ready to view.`,
+      url: '/owner/request',
+    })
+  }
 }
 export function setRequestStatus(id: string, status: ConciergeRequest['status']) {
   const req = db.requests.find((r) => r.id === id)

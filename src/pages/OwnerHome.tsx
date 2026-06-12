@@ -133,15 +133,29 @@ export default function OwnerHome() {
           <div className="pcard">
             <div className="row" style={{ marginBottom: 12 }}>
               <div className="p-eyebrow" style={{ marginBottom: 0 }}>Concierge requests</div>
+              <Link to="/owner/request" className="p-muted" style={{ fontSize: 13 }}>New →</Link>
             </div>
-            {openReqs.length === 0 ? (
-              <p className="p-muted" style={{ fontSize: 14 }}>No open requests.</p>
+            {requests.length === 0 ? (
+              <p className="p-muted" style={{ fontSize: 14 }}>No requests yet.</p>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {openReqs.map((r) => (
-                  <div key={r.id} className="row">
-                    <span style={{ fontSize: 14 }}>{r.category}</span>
-                    <span className={`ppill ${r.status}`}>{r.status}</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                {requests.slice(0, 4).map((r) => (
+                  <div key={r.id} style={{ borderBottom: '1px solid var(--p-line)', paddingBottom: 12 }}>
+                    <div className="row">
+                      <span style={{ fontSize: 14, fontWeight: 600 }}>{r.category}</span>
+                      <span className={`ppill ${r.status}`}>{r.status}</span>
+                    </div>
+                    {r.completionPhotos.length > 0 && (
+                      <div style={{ marginTop: 8 }}>
+                        <div className="p-muted" style={{ fontSize: 11, marginBottom: 4 }}>Finished work</div>
+                        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                          {r.completionPhotos.map((p) => (
+                            <img key={p.id} src={p.dataUrl} alt={p.caption}
+                              style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 8, border: '1px solid var(--p-line)' }} />
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>

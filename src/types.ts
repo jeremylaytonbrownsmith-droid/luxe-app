@@ -129,6 +129,8 @@ export interface ConciergeRequest {
   details: string
   status: RequestStatus
   createdAt: string
+  photos: Photo[]           // client's reference photos: "here's what I want"
+  completionPhotos: Photo[] // tech's photos: "here's the finished result"
 }
 
 // ---- Notifications ---------------------------------------------------------

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth'
 import { isDemo } from '../firebase'
+import { BRAND_LOGO } from '../brand'
 
 export default function Login() {
   const { loginAs } = useAuth()
@@ -13,12 +14,12 @@ export default function Login() {
 
   return (
     <div className="center fade-in">
-      <div style={{ textAlign: 'center', marginBottom: 40 }}>
-        <div className="logo-mark" style={{ fontSize: 30, marginBottom: 6 }}>LLC</div>
-        <div style={{ letterSpacing: '0.34em', fontSize: 13, fontWeight: 700 }}>LOCAL LUXE</div>
-        <div style={{ letterSpacing: '0.34em', fontSize: 13, fontWeight: 700, color: 'var(--muted)' }}>
-          CONCIERGE
-        </div>
+      <div style={{ marginBottom: 36 }}>
+        <img
+          src={BRAND_LOGO}
+          alt="Local Luxe Concierge"
+          style={{ width: 220, maxWidth: '78vw', borderRadius: 18, display: 'block', boxShadow: '0 18px 40px rgba(0,0,0,0.35)' }}
+        />
       </div>
 
       <p className="script" style={{ marginBottom: 10 }}>welcome</p>

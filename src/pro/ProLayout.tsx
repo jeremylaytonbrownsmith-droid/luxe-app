@@ -4,6 +4,7 @@ import { useAuth } from '../auth'
 import { markNotificationsRead, notificationsFor, useStore } from '../data'
 import { registerServiceWorker } from '../notifications'
 import { timeAgo } from '../components'
+import { BRAND_LOGO } from '../brand'
 
 const NAV = [
   { to: '/pro', end: true, ic: '🏠', label: 'Home' },
@@ -39,11 +40,8 @@ export function ProLayout({
     <div className="pro">
       <aside className="pro-sidebar">
         <div className="pro-logo">
-          <div className="mark">LL</div>
-          <div className="txt">
-            <div className="n">Local Luxe</div>
-            <div className="s">PRO PORTAL</div>
-          </div>
+          <img className="pro-logo-img" src={BRAND_LOGO} alt="Local Luxe Concierge" />
+          <div className="s" style={{ marginTop: 4 }}>PRO PORTAL</div>
         </div>
         <nav className="pro-nav">
           {NAV.map((n) => (

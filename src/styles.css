@@ -1,10 +1,10 @@
 /* Local Luxe Concierge — brand styling
    Palette & fonts pulled from the Local-Luxe website. */
 :root {
-  --navy: #16477c;
-  --navy-deep: #0c2a4e;
-  --navy-darker: #091528;
-  --teal: #2e8b7a;
+  --navy: #2f5167;
+  --navy-deep: #1a2f3d;
+  --navy-darker: #0f1d27;
+  --teal: #8faa9b; /* logo sage green */
   --gold: #c5a74e;
   --cream: #f5f3ee;
   --ink: #1d2b3a;
@@ -182,8 +182,8 @@ select option { color: #000; }
   --p-ink: #1d2b3a;
   --p-muted: #6b7785;
   --p-line: #e6e9ee;
-  --p-navy: #1d4e6b;
-  --p-teal: #2e8b7a;
+  --p-navy: #2f5167;
+  --p-teal: #5d8071; /* deeper sage for white-text button contrast */
   --p-gold: #c5a74e;
   color: var(--p-ink);
   background: var(--p-bg);
@@ -198,15 +198,9 @@ select option { color: #000; }
   background: #fff; border-right: 1px solid var(--p-line);
   display: flex; flex-direction: column; padding: 22px 16px; z-index: 30;
 }
-.pro-logo { display: flex; align-items: center; gap: 10px; padding: 4px 8px 22px; }
-.pro-logo .mark {
-  width: 38px; height: 38px; border-radius: 9px; display: grid; place-items: center;
-  background: linear-gradient(160deg, var(--p-navy), #0c2a4e); color: var(--p-gold);
-  font-family: var(--serif); font-weight: 700; font-size: 18px;
-}
-.pro-logo .txt { line-height: 1.05; }
-.pro-logo .txt .n { font-family: var(--serif); font-weight: 700; font-size: 15px; color: var(--p-navy); letter-spacing: 0.04em; }
-.pro-logo .txt .s { font-size: 9px; letter-spacing: 0.28em; color: var(--p-muted); font-weight: 700; }
+.pro-logo { display: flex; flex-direction: column; align-items: center; padding: 4px 8px 20px; }
+.pro-logo-img { width: 156px; max-width: 100%; height: auto; display: block; }
+.pro-logo .s { font-size: 9px; letter-spacing: 0.28em; color: var(--p-muted); font-weight: 700; text-align: center; }
 .pro-nav { display: flex; flex-direction: column; gap: 2px; margin-top: 6px; }
 .pro-nav a {
   display: flex; align-items: center; gap: 12px; padding: 11px 12px; border-radius: 10px;
@@ -315,6 +309,8 @@ select option { color: #000; }
   .pro { flex-direction: column; }
   .pro-sidebar { position: sticky; width: 100%; flex-direction: row; align-items: center; padding: 10px 12px; overflow-x: auto; }
   .pro-logo { padding: 0 8px 0 0; }
+  .pro-logo-img { width: 100px; }
+  .pro-logo .s { display: none; }
   .pro-nav { flex-direction: row; margin: 0; }
   .pro-nav a span:not(.ic) { display: none; }
   .pro-sidebar .foot { margin: 0 0 0 auto; }

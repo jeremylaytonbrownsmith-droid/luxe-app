@@ -14,11 +14,23 @@ export default function Login() {
 
   return (
     <div className="center fade-in">
-      <div style={{ marginBottom: 36 }}>
+      <div
+        style={{
+          marginBottom: 34,
+          background: '#fff',
+          borderRadius: 28,
+          padding: 24,
+          width: 196,
+          height: 196,
+          display: 'grid',
+          placeItems: 'center',
+          boxShadow: '0 26px 60px rgba(0,0,0,0.45)',
+        }}
+      >
         <img
           src={BRAND_LOGO}
           alt="Local Luxe Concierge"
-          style={{ width: 220, maxWidth: '78vw', borderRadius: 18, display: 'block', boxShadow: '0 18px 40px rgba(0,0,0,0.35)' }}
+          style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
         />
       </div>
 

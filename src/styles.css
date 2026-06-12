@@ -27,8 +27,8 @@ body {
   font-family: var(--sans);
   color: #fff;
   background:
-    radial-gradient(ellipse 80% 60% at 15% 0%, rgba(197, 167, 78, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 90% 60% at 85% 100%, rgba(46, 139, 122, 0.1) 0%, transparent 60%),
+    radial-gradient(120% 80% at 50% -8%, #3a627a 0%, transparent 55%),
+    radial-gradient(100% 70% at 50% 118%, rgba(143, 170, 155, 0.14) 0%, transparent 60%),
     linear-gradient(180deg, var(--navy-deep) 0%, var(--navy-darker) 100%);
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;

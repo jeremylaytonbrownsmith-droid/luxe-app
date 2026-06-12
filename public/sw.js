@@ -2,8 +2,10 @@
  * Handles: (1) a tiny offline cache for the shell, and
  *          (2) showing notifications dispatched from the page (demo + FCM foreground).
  */
-const CACHE = 'luxe-shell-v1'
-const SHELL = ['/', '/index.html', '/manifest.webmanifest', '/icons/icon.svg']
+// Paths are relative to the service worker's scope, so this works both at the
+// site root (local dev) and under a subpath like /luxe-app/ (GitHub Pages).
+const CACHE = 'luxe-shell-v2'
+const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon.svg']
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).catch(() => {}))
@@ -25,7 +27,7 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return
   if (request.mode === 'navigate') {
     event.respondWith(
-      fetch(request).catch(() => caches.match('/index.html').then((r) => r || fetch(request)))
+      fetch(request).catch(() => caches.match('./index.html').then((r) => r || fetch(request)))
     )
   }
 })
@@ -47,16 +49,14 @@ self.addEventListener('message', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close()
-  const url = (event.notification.data && event.notification.data.url) || '/'
+  // Open/focus the app at its scope root (works under any base path + hash routing).
+  const home = self.registration.scope
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((list) => {
       for (const client of list) {
-        if ('focus' in client) {
-          client.navigate(url)
-          return client.focus()
-        }
+        if ('focus' in client) return client.focus()
       }
-      return self.clients.openWindow(url)
+      return self.clients.openWindow(home)
     })
   )
 })

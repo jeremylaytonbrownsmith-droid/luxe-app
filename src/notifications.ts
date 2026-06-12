@@ -8,7 +8,8 @@ let swReg: ServiceWorkerRegistration | null = null
 export async function registerServiceWorker(): Promise<void> {
   if (!('serviceWorker' in navigator)) return
   try {
-    swReg = await navigator.serviceWorker.register('/sw.js')
+    // Base-aware so it works both locally (/) and on GitHub Pages (/luxe-app/).
+    swReg = await navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`)
   } catch (e) {
     console.warn('SW registration failed', e)
   }

@@ -1,0 +1,29 @@
+name: Deploy to GitHub Pages
+
+# Builds the PWA and publishes it to the `gh-pages` branch on every push to the
+# working branch. Enable Pages once: Settings → Pages → Source: "Deploy from a
+# branch" → Branch: gh-pages / (root). Live at:
+#   https://jeremylaytonbrownsmith-droid.github.io/luxe-app/
+on:
+  push:
+    branches: [claude/lucid-curie-crk98u]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist

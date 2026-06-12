@@ -1,6 +1,6 @@
 // Shared domain types for Local Luxe Concierge.
 
-export type Role = 'owner' | 'operator'
+export type Role = 'owner' | 'pro'
 
 export interface User {
   id: string
@@ -10,36 +10,107 @@ export interface User {
   propertyId?: string // owners are tied to a property
 }
 
-export interface Property {
+// ---- People ----------------------------------------------------------------
+export type InviteStatus = 'unassigned' | 'invited' | 'accepted' | 'declined'
+
+export interface Client {
   id: string
-  ownerId: string
-  ownerName: string
-  address: string
-  community: string
-  sizeTier: 'condo' | 'mid' | 'large' // matches pricing tiers on the website
-  plan: 'weekly' | 'bi-monthly' | 'monthly'
+  firstName: string
+  lastName: string
+  phone: string
+  email: string
+  photoUrl?: string
+  birthday?: string
+  anniversary?: string
+  propertyId?: string
+  inviteStatus: InviteStatus
+  updatedAt: string
 }
 
+// ---- Vetted vendors --------------------------------------------------------
+export const SERVICE_CATEGORIES = [
+  'Electrician',
+  'Plumber',
+  'HVAC',
+  'Roofing',
+  'Pest Control',
+  'Landscaping',
+  'Pool & Spa',
+  'Cleaners',
+  'Handyman',
+  'General Contractor',
+  'Painting',
+  'Appliance Repair',
+  'Exterior Cleaning',
+  'Hurricane Prep',
+  'Other',
+] as const
+export type ServiceCategory = (typeof SERVICE_CATEGORIES)[number]
+
+export interface Expert {
+  id: string
+  company: string
+  website?: string
+  email: string
+  phone: string
+  description: string
+  logoUrl?: string
+  serviceArea: string
+  categories: ServiceCategory[]
+}
+
+// ---- Properties ------------------------------------------------------------
+export type PropertyStatus = 'active' | 'pending' | 'sold'
+export type Plan = 'weekly' | 'bi-monthly' | 'monthly'
+
+export interface PropertyDoc {
+  id: string
+  name: string
+  kind: 'pdf' | 'image'
+}
+
+export interface Property {
+  id: string
+  name: string
+  address: string
+  community: string
+  beds: number
+  baths: number
+  yearBuilt: number
+  sqft: number
+  salePrice?: number
+  photoUrl?: string
+  status: PropertyStatus
+  documents: PropertyDoc[]
+  // Home-watch service config
+  sizeTier: 'condo' | 'mid' | 'large'
+  plan: Plan
+  // Linkage + sharing (the HomeLedger-style invite)
+  clientId?: string
+  sharedDocIds: string[]
+  sharedExpertIds: string[]
+}
+
+// ---- Home watch ------------------------------------------------------------
 export type VisitStatus = 'scheduled' | 'in-progress' | 'completed'
 
-// One checklist item captured during a home-watch inspection.
 export interface CheckItem {
   key: string
   label: string
-  ok: boolean | null // null = not yet checked
+  ok: boolean | null
   note?: string
 }
 
 export interface Photo {
   id: string
   caption: string
-  dataUrl: string // in demo we store data URLs; in prod these are Storage URLs
+  dataUrl: string
 }
 
 export interface Visit {
   id: string
   propertyId: string
-  scheduledFor: string // ISO date
+  scheduledFor: string
   status: VisitStatus
   checklist: CheckItem[]
   photos: Photo[]
@@ -47,9 +118,9 @@ export interface Visit {
   completedAt?: string
 }
 
+// ---- Concierge requests ----------------------------------------------------
 export type RequestStatus = 'new' | 'acknowledged' | 'scheduled' | 'done'
 
-// A concierge add-on request raised by an owner.
 export interface ConciergeRequest {
   id: string
   propertyId: string
@@ -60,6 +131,7 @@ export interface ConciergeRequest {
   createdAt: string
 }
 
+// ---- Notifications ---------------------------------------------------------
 export interface AppNotification {
   id: string
   to: Role

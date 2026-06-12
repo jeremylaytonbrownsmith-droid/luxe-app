@@ -13,7 +13,7 @@ const DEMO_USERS: Record<Role, User> = {
     role: 'owner',
     propertyId: 'prop-1',
   },
-  operator: { id: 'op-1', name: 'Local Luxe Team', email: 'team@demo.com', role: 'operator' },
+  pro: { id: 'pro-1', name: 'Local Luxe Team', email: 'team@demo.com', role: 'pro' },
 }
 
 const SESSION_KEY = 'luxe.session'

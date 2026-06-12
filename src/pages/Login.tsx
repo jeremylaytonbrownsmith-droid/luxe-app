@@ -6,9 +6,9 @@ export default function Login() {
   const { loginAs } = useAuth()
   const navigate = useNavigate()
 
-  const enter = (role: 'owner' | 'operator') => {
+  const enter = (role: 'owner' | 'pro') => {
     loginAs(role)
-    navigate(role === 'owner' ? '/owner' : '/operator', { replace: true })
+    navigate(role === 'owner' ? '/owner' : '/pro', { replace: true })
   }
 
   return (
@@ -29,7 +29,7 @@ export default function Login() {
 
       <div style={{ width: '100%', maxWidth: 340 }} className="stack">
         <button className="btn" onClick={() => enter('owner')}>Enter as Homeowner</button>
-        <button className="btn secondary" onClick={() => enter('operator')}>Enter as Concierge Team</button>
+        <button className="btn secondary" onClick={() => enter('pro')}>Enter as Local Luxe Team</button>
       </div>
 
       {isDemo && (

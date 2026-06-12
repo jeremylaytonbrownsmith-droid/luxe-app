@@ -1,6 +1,6 @@
 import { useAuth } from '../auth'
 import { getProperty, resetDemo, useStore } from '../data'
-import { OperatorNav, OwnerNav, Screen } from '../components'
+import { OwnerNav, Screen } from '../components'
 import {
   notificationPermission,
   requestNotificationPermission,
@@ -10,12 +10,11 @@ import { useState } from 'react'
 
 export default function Account() {
   const { user, logout } = useAuth()
-  const isOwner = user?.role === 'owner'
   const property = useStore(() => getProperty(user?.propertyId))
   const [perm, setPerm] = useState(notificationPermission())
 
   return (
-    <Screen nav={isOwner ? <OwnerNav /> : <OperatorNav />}>
+    <Screen nav={<OwnerNav />}>
       <h1 style={{ fontSize: 24, marginBottom: 16 }}>Account</h1>
 
       <div className="card">
@@ -25,7 +24,7 @@ export default function Account() {
         <p className="muted" style={{ textTransform: 'capitalize', marginTop: 4 }}>{user?.role}</p>
       </div>
 
-      {isOwner && property && (
+      {property && (
         <div className="card">
           <div className="eyebrow">Property</div>
           <h3 style={{ fontSize: 17 }}>{property.address}</h3>

@@ -45,22 +45,6 @@ export function OwnerNav() {
   )
 }
 
-export function OperatorNav() {
-  return (
-    <nav className="nav">
-      <NavLink to="/operator" end className={({ isActive }) => (isActive ? 'active' : '')}>
-        <span className="ic">📍</span>Visits
-      </NavLink>
-      <NavLink to="/operator/requests" className={({ isActive }) => (isActive ? 'active' : '')}>
-        <span className="ic">✨</span>Requests
-      </NavLink>
-      <NavLink to="/operator/account" className={({ isActive }) => (isActive ? 'active' : '')}>
-        <span className="ic">👤</span>Account
-      </NavLink>
-    </nav>
-  )
-}
-
 // Slide-down notification list. Tapping a notification routes to its target.
 export function NotificationsSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { user } = useAuth()
@@ -184,4 +168,13 @@ export function fmtDate(iso: string): string {
     month: 'short',
     day: 'numeric',
   })
+}
+
+export function fmtMoney(n?: number): string {
+  if (n == null) return '—'
+  return n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })
+}
+
+export function initials(first: string, last: string): string {
+  return `${first[0] ?? ''}${last[0] ?? ''}`.toUpperCase()
 }

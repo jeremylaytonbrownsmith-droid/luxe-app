@@ -62,6 +62,21 @@ export default function OwnerHome() {
         </p>
       </div>
 
+      <div className="row" style={{ gap: 12, marginBottom: 14 }}>
+        <Link to="/owner/documents" style={{ flex: 1 }}>
+          <div className="card" style={{ margin: 0, textAlign: 'center' }}>
+            <div style={{ fontSize: 26 }}>📄</div>
+            <div style={{ fontWeight: 600, marginTop: 6 }}>Documents</div>
+          </div>
+        </Link>
+        <Link to="/owner/experts" style={{ flex: 1 }}>
+          <div className="card" style={{ margin: 0, textAlign: 'center' }}>
+            <div style={{ fontSize: 26 }}>🛠️</div>
+            <div style={{ fontWeight: 600, marginTop: 6 }}>Trusted Experts</div>
+          </div>
+        </Link>
+      </div>
+
       <div className="card">
         <div className="row">
           <div className="eyebrow" style={{ marginBottom: 0 }}>Concierge requests</div>

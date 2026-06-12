@@ -1,0 +1,20 @@
+{
+  "name": "Local Luxe Concierge",
+  "short_name": "Local Luxe",
+  "description": "Home watch reports & concierge requests for your second home.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c2a4e",
+  "theme_color": "#0c2a4e",
+  "categories": ["lifestyle", "productivity"],
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

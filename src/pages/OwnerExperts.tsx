@@ -1,6 +1,7 @@
 import { useAuth } from '../auth'
 import { expertsByIds, getProperty, useStore } from '../data'
 import { OwnerNav, Screen } from '../components'
+import { Icon } from '../icons'
 
 export default function OwnerExperts() {
   const { user } = useAuth()
@@ -25,9 +26,9 @@ export default function OwnerExperts() {
                 </div>
               </div>
               <p className="muted" style={{ fontSize: 13, lineHeight: 1.5, marginBottom: 12 }}>{e.description}</p>
-              <div className="row">
-                <a href={`tel:${e.phone}`} className="btn sm ghost" style={{ width: 'auto' }}>📞 {e.phone}</a>
-                <a href={`mailto:${e.email}`} className="btn sm ghost" style={{ width: 'auto' }}>✉️ Email</a>
+              <div className="row" style={{ justifyContent: 'flex-start' }}>
+                <a href={`tel:${e.phone}`} className="btn sm ghost" style={{ width: 'auto', gap: 6 }}><Icon name="phone" size={16} /> {e.phone}</a>
+                <a href={`mailto:${e.email}`} className="btn sm ghost" style={{ width: 'auto', gap: 6 }}><Icon name="mail" size={16} /> Email</a>
               </div>
             </div>
           ))}

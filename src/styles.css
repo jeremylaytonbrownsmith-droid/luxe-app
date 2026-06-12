@@ -31,7 +31,10 @@ html, body, #root { height: 100%; }
 body {
   font-family: var(--sans);
   color: var(--ink);
-  background: var(--bg);
+  background:
+    radial-gradient(900px 520px at 50% -6%, #dbe3ea 0%, transparent 60%),
+    linear-gradient(180deg, #d6dee6 0%, #ccd6df 100%);
+  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -39,7 +42,11 @@ button { font-family: inherit; cursor: pointer; border: none; }
 a { color: inherit; text-decoration: none; }
 
 /* ---- Layout (phone-width app column) ---- */
-.app { max-width: 480px; margin: 0 auto; min-height: 100%; display: flex; flex-direction: column; background: var(--bg); }
+.app {
+  max-width: 480px; margin: 0 auto; min-height: 100vh;
+  display: flex; flex-direction: column; background: var(--bg);
+  box-shadow: 0 0 0 1px rgba(20, 40, 70, 0.05), 0 24px 70px rgba(20, 40, 70, 0.16);
+}
 .screen { flex: 1; padding: 18px 16px 96px; }
 .center { min-height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 22px; }
 

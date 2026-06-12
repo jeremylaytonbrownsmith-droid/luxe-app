@@ -1,6 +1,7 @@
 import { useAuth } from '../auth'
 import { getProperty, useStore } from '../data'
 import { OwnerNav, Screen } from '../components'
+import { Icon } from '../icons'
 
 export default function OwnerDocuments() {
   const { user } = useAuth()
@@ -19,7 +20,7 @@ export default function OwnerDocuments() {
             <div key={d.id} className="card" style={{ margin: 0 }}>
               <div className="row">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <span style={{ fontSize: 24 }}>📄</span>
+                  <span style={{ color: 'var(--sage-deep)' }}><Icon name="document" size={22} /></span>
                   <span style={{ fontWeight: 600 }}>{d.name}</span>
                 </div>
                 <span className="pill info">{d.kind.toUpperCase()}</span>

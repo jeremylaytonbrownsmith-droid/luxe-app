@@ -8,6 +8,7 @@ import {
   requestNotificationPermission,
   registerServiceWorker,
 } from './notifications'
+import { Icon } from './icons'
 
 export function TopBar({ onBell }: { onBell: () => void }) {
   const { user } = useAuth()
@@ -20,7 +21,8 @@ export function TopBar({ onBell }: { onBell: () => void }) {
         <span className="sub">CONCIERGE</span>
       </div>
       <button className="icon-btn" onClick={onBell} aria-label="Notifications">
-        🔔{unread > 0 && <span className="badge">{unread}</span>}
+        <Icon name="bell" size={22} />
+        {unread > 0 && <span className="badge">{unread}</span>}
       </button>
     </header>
   )
@@ -30,16 +32,16 @@ export function OwnerNav() {
   return (
     <nav className="nav">
       <NavLink to="/owner" end className={({ isActive }) => (isActive ? 'active' : '')}>
-        <span className="ic">🏠</span>Home
+        <span className="ic"><Icon name="home" size={22} /></span>Home
       </NavLink>
       <NavLink to="/owner/visits" className={({ isActive }) => (isActive ? 'active' : '')}>
-        <span className="ic">📋</span>Reports
+        <span className="ic"><Icon name="reports" size={22} /></span>Reports
       </NavLink>
       <NavLink to="/owner/request" className={({ isActive }) => (isActive ? 'active' : '')}>
-        <span className="ic">✨</span>Concierge
+        <span className="ic"><Icon name="concierge" size={22} /></span>Concierge
       </NavLink>
       <NavLink to="/owner/account" className={({ isActive }) => (isActive ? 'active' : '')}>
-        <span className="ic">👤</span>Account
+        <span className="ic"><Icon name="account" size={22} /></span>Account
       </NavLink>
     </nav>
   )
@@ -113,7 +115,7 @@ export function EnablePushBanner() {
   if (perm === 'granted' || perm === 'denied') return null
   return (
     <div className="banner">
-      <span style={{ fontSize: 18 }}>🔔</span>
+      <span style={{ color: 'var(--gold-ink)' }}><Icon name="bell" size={20} /></span>
       <span style={{ flex: 1 }}>Turn on notifications to get home watch reports the moment they’re ready.</span>
       <button
         className="btn sm"

@@ -49,10 +49,10 @@ export default function PropertyDetail() {
               <span style={{ fontWeight: 700, color: 'var(--p-navy)', fontSize: 18 }}>{fmtMoney(property.salePrice)}</span>
             </div>
             <div className="meta" style={{ display: 'flex', gap: 16, color: 'var(--p-muted)', fontSize: 13 }}>
-              <span>🛏 {property.beds} bd</span>
-              <span>🛁 {property.baths} ba</span>
-              <span>📐 {property.sqft.toLocaleString()} sqft</span>
-              <span>📅 {property.yearBuilt}</span>
+              <span>{property.beds} bd</span>
+              <span>{property.baths} ba</span>
+              <span>{property.sqft.toLocaleString()} sqft</span>
+              <span>Built {property.yearBuilt}</span>
             </div>
             <div style={{ marginTop: 14, display: 'flex', gap: 8 }}>
               {(['active', 'pending', 'sold'] as const).map((s) => (

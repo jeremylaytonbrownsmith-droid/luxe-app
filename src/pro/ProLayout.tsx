@@ -5,16 +5,17 @@ import { markNotificationsRead, notificationsFor, useStore } from '../data'
 import { registerServiceWorker } from '../notifications'
 import { timeAgo } from '../components'
 import { BRAND_LOGO } from '../brand'
+import { Icon } from '../icons'
 
 const NAV = [
-  { to: '/pro', end: true, ic: '🏠', label: 'Home' },
-  { to: '/pro/clients', ic: '👥', label: 'Clients' },
-  { to: '/pro/properties', ic: '🏡', label: 'Properties' },
-  { to: '/pro/experts', ic: '🛠️', label: 'Experts' },
-  { to: '/pro/visits', ic: '📋', label: 'Home Watch' },
-  { to: '/pro/requests', ic: '✨', label: 'Requests' },
-  { to: '/pro/settings', ic: '⚙️', label: 'Settings' },
-]
+  { to: '/pro', end: true, ic: 'home', label: 'Home' },
+  { to: '/pro/clients', ic: 'clients', label: 'Clients' },
+  { to: '/pro/properties', ic: 'properties', label: 'Properties' },
+  { to: '/pro/experts', ic: 'experts', label: 'Experts' },
+  { to: '/pro/visits', ic: 'homewatch', label: 'Home Watch' },
+  { to: '/pro/requests', ic: 'concierge', label: 'Requests' },
+  { to: '/pro/settings', ic: 'settings', label: 'Settings' },
+] as const
 
 export function ProLayout({
   title,
@@ -45,14 +46,16 @@ export function ProLayout({
         </div>
         <nav className="pro-nav">
           {NAV.map((n) => (
-            <NavLink key={n.to} to={n.to} end={n.end} className={({ isActive }) => (isActive ? 'active' : '')}>
-              <span className="ic">{n.ic}</span>
+            <NavLink key={n.to} to={n.to} end={(n as { end?: boolean }).end} className={({ isActive }) => (isActive ? 'active' : '')}>
+              <span className="ic"><Icon name={n.ic} size={19} /></span>
               <span>{n.label}</span>
             </NavLink>
           ))}
         </nav>
         <div className="foot">
-          <button onClick={logout} title="Sign out">⎋ Sign out</button>
+          <button onClick={logout} title="Sign out" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <Icon name="logout" size={17} /> Sign out
+          </button>
         </div>
       </aside>
 
@@ -65,7 +68,8 @@ export function ProLayout({
           <div className="pro-head-actions">
             {actions}
             <button className="pro-bell icon-btn" onClick={() => setBell((b) => !b)} aria-label="Notifications">
-              🔔{unread > 0 && <span className="badge">{unread}</span>}
+              <Icon name="bell" size={20} />
+              {unread > 0 && <span className="badge">{unread}</span>}
             </button>
             <div className="pro-avatar" style={{ background: '#1d4e6b', color: '#c5a74e', display: 'grid', placeItems: 'center', fontWeight: 700 }}>
               {user?.name?.[0] ?? 'L'}

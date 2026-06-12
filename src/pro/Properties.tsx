@@ -43,9 +43,9 @@ export default function Properties() {
                 <h3>{p.name}</h3>
                 <div className="p-muted" style={{ fontSize: 12, marginTop: 2 }}>{p.address}</div>
                 <div className="meta">
-                  <span>🛏 {p.beds}</span>
-                  <span>🛁 {p.baths}</span>
-                  <span>📐 {p.sqft.toLocaleString()} sqft</span>
+                  <span>{p.beds} bd</span>
+                  <span>{p.baths} ba</span>
+                  <span>{p.sqft.toLocaleString()} sqft</span>
                 </div>
                 <div className="row" style={{ marginTop: 10 }}>
                   <span style={{ fontWeight: 700, color: 'var(--p-navy)' }}>{fmtMoney(p.salePrice)}</span>

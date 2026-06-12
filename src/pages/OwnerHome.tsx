@@ -7,6 +7,7 @@ import {
   visitsForProperty,
 } from '../data'
 import { EnablePushBanner, OwnerNav, Screen, fmtDate } from '../components'
+import { Icon } from '../icons'
 
 export default function OwnerHome() {
   const { user } = useAuth()
@@ -64,15 +65,15 @@ export default function OwnerHome() {
 
       <div className="row" style={{ gap: 12, marginBottom: 14 }}>
         <Link to="/owner/documents" style={{ flex: 1 }}>
-          <div className="card" style={{ margin: 0, textAlign: 'center' }}>
-            <div style={{ fontSize: 26 }}>📄</div>
-            <div style={{ fontWeight: 600, marginTop: 6 }}>Documents</div>
+          <div className="card" style={{ margin: 0, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+            <span style={{ color: 'var(--sage-deep)' }}><Icon name="document" size={28} /></span>
+            <div style={{ fontWeight: 600 }}>Documents</div>
           </div>
         </Link>
         <Link to="/owner/experts" style={{ flex: 1 }}>
-          <div className="card" style={{ margin: 0, textAlign: 'center' }}>
-            <div style={{ fontSize: 26 }}>🛠️</div>
-            <div style={{ fontWeight: 600, marginTop: 6 }}>Trusted Experts</div>
+          <div className="card" style={{ margin: 0, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+            <span style={{ color: 'var(--sage-deep)' }}><Icon name="experts" size={28} /></span>
+            <div style={{ fontWeight: 600 }}>Trusted Experts</div>
           </div>
         </Link>
       </div>

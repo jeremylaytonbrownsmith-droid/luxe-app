@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ProLayout } from './ProLayout'
 import { getClients, getProperty, upsertClient, useStore } from '../data'
 import { fmtDate, initials } from '../components'
+import { Icon } from '../icons'
 import type { Client } from '../types'
 
 export default function Clients() {
@@ -21,7 +22,8 @@ export default function Clients() {
       actions={
         <>
           <div className="pro-search">
-            🔎<input placeholder="Search clients…" value={q} onChange={(e) => setQ(e.target.value)} />
+            <span style={{ color: 'var(--p-muted)' }}><Icon name="search" size={16} /></span>
+            <input placeholder="Search clients…" value={q} onChange={(e) => setQ(e.target.value)} />
           </div>
           <button className="pbtn sm" onClick={() => setEditing('new')}>+ New Client</button>
         </>

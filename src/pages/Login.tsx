@@ -13,7 +13,7 @@ export default function Login() {
   }
 
   return (
-    <div className="center fade-in">
+    <div className="center splash fade-in">
       <div
         style={{
           marginBottom: 34,

@@ -66,9 +66,9 @@ export function NotificationsSheet({ open, onClose }: { open: boolean; onClose: 
         className="fade-in"
         onClick={(e) => e.stopPropagation()}
         style={{
-          maxWidth: 720,
+          maxWidth: 480,
           margin: '0 auto',
-          background: '#0c2236',
+          background: '#fff',
           borderBottomLeftRadius: 18,
           borderBottomRightRadius: 18,
           padding: 18,

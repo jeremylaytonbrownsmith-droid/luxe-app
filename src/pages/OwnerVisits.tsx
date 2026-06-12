@@ -1,43 +1,35 @@
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { OwnerLayout } from '../Shell'
 import { useAuth } from '../auth'
 import { useStore, visitsForProperty } from '../data'
-import { OwnerNav, Screen, fmtDate } from '../components'
+import { fmtDate } from '../components'
 
 export default function OwnerVisits() {
   const { user } = useAuth()
   const visits = useStore(() => visitsForProperty(user?.propertyId))
+  const navigate = useNavigate()
 
   return (
-    <Screen nav={<OwnerNav />}>
-      <h1 style={{ fontSize: 24, marginBottom: 16 }}>Visit History</h1>
-      {visits.length === 0 && <div className="empty">No visits yet.</div>}
-      <div className="stack">
+    <OwnerLayout title="Reports" subtitle="Your home watch visit history.">
+      <div className="pcard">
+        {visits.length === 0 && <p className="p-muted" style={{ fontSize: 14 }}>No visits yet.</p>}
         {visits.map((v) => {
-          const completed = v.status === 'completed'
-          const inner = (
-            <div className="card" style={{ margin: 0 }}>
-              <div className="row">
-                <h3 style={{ fontSize: 17 }}>{fmtDate(v.completedAt || v.scheduledFor)}</h3>
-                <span className={`pill ${completed ? 'ok' : 'info'}`}>
-                  {completed ? '✓ Report ready' : v.status}
-                </span>
+          const done = v.status === 'completed'
+          const issues = v.checklist.filter((c) => c.ok === false).length
+          return (
+            <div key={v.id} className="prow" style={{ gridTemplateColumns: '1fr auto', marginBottom: 10 }}
+              onClick={() => done && navigate(`/owner/report/${v.id}`)}>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: 15 }}>{fmtDate(v.completedAt || v.scheduledFor)}</div>
+                <div className="p-muted" style={{ fontSize: 13 }}>{done ? `${v.photos.length} photos · tap to view` : 'Upcoming visit'}</div>
               </div>
-              {completed ? (
-                <p className="muted" style={{ marginTop: 8, fontSize: 14 }}>
-                  {v.photos.length} photos · tap to view report →
-                </p>
-              ) : (
-                <p className="muted" style={{ marginTop: 8, fontSize: 14 }}>Upcoming visit</p>
-              )}
+              <span className={`ppill ${done ? (issues ? 'warn' : 'done') : 'invited'}`}>
+                {done ? (issues ? `${issues} flagged` : '✓ All clear') : v.status}
+              </span>
             </div>
-          )
-          return completed ? (
-            <Link key={v.id} to={`/owner/report/${v.id}`}>{inner}</Link>
-          ) : (
-            <div key={v.id}>{inner}</div>
           )
         })}
       </div>
-    </Screen>
+    </OwnerLayout>
   )
 }

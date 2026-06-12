@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
+import { OwnerLayout } from '../Shell'
 import { getVisit, useStore } from '../data'
-import { OwnerNav, Screen, fmtDate } from '../components'
+import { fmtDate } from '../components'
 
 export default function ReportView() {
   const { id = '' } = useParams()
@@ -8,76 +9,56 @@ export default function ReportView() {
   const navigate = useNavigate()
 
   if (!visit) {
-    return (
-      <Screen nav={<OwnerNav />}>
-        <div className="empty">Report not found.</div>
-      </Screen>
-    )
+    return <OwnerLayout title="Report"><p className="p-muted">Report not found.</p></OwnerLayout>
   }
-
   const issues = visit.checklist.filter((c) => c.ok === false)
 
   return (
-    <Screen nav={<OwnerNav />}>
-      <button className="btn sm ghost" style={{ marginBottom: 14 }} onClick={() => navigate(-1)}>
-        ← Back
-      </button>
+    <OwnerLayout
+      title={`Home checked ${fmtDate(visit.completedAt || visit.scheduledFor)}`}
+      subtitle={`${visit.checklist.length}-point inspection`}
+      actions={<button className="pbtn ghost sm" onClick={() => navigate(-1)}>← Back</button>}
+    >
+      <div className="p-grid" style={{ gridTemplateColumns: '1.4fr 1fr' }}>
+        <div>
+          {visit.summary && (
+            <div className="pcard">
+              <div className="p-eyebrow" style={{ marginBottom: 8 }}>Summary</div>
+              <p style={{ fontSize: 15, lineHeight: 1.55 }}>{visit.summary}</p>
+            </div>
+          )}
 
-      <p className="script">home watch report</p>
-      <h1 style={{ fontSize: 23, marginBottom: 4 }}>
-        {fmtDate(visit.completedAt || visit.scheduledFor)}
-      </h1>
-      <div className="row" style={{ marginBottom: 16 }}>
-        <span className="muted">{visit.checklist.length}-point inspection</span>
-        <span className={`pill ${issues.length ? 'warn' : 'ok'}`}>
-          {issues.length ? `${issues.length} item${issues.length > 1 ? 's' : ''} flagged` : '✓ All clear'}
-        </span>
-      </div>
-
-      {visit.summary && (
-        <div className="card">
-          <div className="eyebrow">Summary</div>
-          <p style={{ fontSize: 15, lineHeight: 1.5 }}>{visit.summary}</p>
-        </div>
-      )}
-
-      {visit.photos.length > 0 && (
-        <div className="card">
-          <div className="eyebrow">Photos</div>
-          <div className="photos">
-            {visit.photos.map((p) => (
-              <div key={p.id} className="photo">
-                <img src={p.dataUrl} alt={p.caption} />
-                <div className="cap">{p.caption}</div>
+          {visit.photos.length > 0 && (
+            <div className="pcard">
+              <div className="p-eyebrow" style={{ marginBottom: 12 }}>Photos</div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(140px,1fr))', gap: 10 }}>
+                {visit.photos.map((p) => (
+                  <div key={p.id} style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid var(--p-line)' }}>
+                    <img src={p.dataUrl} alt={p.caption} style={{ width: '100%', height: 120, objectFit: 'cover', display: 'block' }} />
+                    <div className="p-muted" style={{ fontSize: 12, padding: '7px 9px' }}>{p.caption}</div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          )}
         </div>
-      )}
 
-      <div className="card">
-        <div className="eyebrow">Inspection checklist</div>
-        {visit.checklist.map((c) => (
-          <div key={c.key} className="check">
-            <span className="label">{c.label}</span>
-            {c.ok === null ? (
-              <span className="muted">—</span>
-            ) : c.ok ? (
-              <span className="pill ok">OK</span>
-            ) : (
-              <span className="pill warn">Note</span>
-            )}
+        <div className="pcard">
+          <div className="row" style={{ marginBottom: 12 }}>
+            <div className="p-eyebrow" style={{ marginBottom: 0 }}>Inspection</div>
+            <span className={`ppill ${issues.length ? 'warn' : 'done'}`}>{issues.length ? `${issues.length} flagged` : '✓ All clear'}</span>
           </div>
-        ))}
-        {issues.map(
-          (c) =>
-            c.note && (
-              <p key={c.key} className="muted" style={{ marginTop: 10, fontSize: 13 }}>
-                <strong style={{ color: 'var(--warn)' }}>{c.label}:</strong> {c.note}
-              </p>
-            )
-        )}
+          {visit.checklist.map((c) => (
+            <div key={c.key} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '10px 0', borderBottom: '1px solid var(--p-line)' }}>
+              <span style={{ flex: 1, fontSize: 14 }}>
+                {c.label}
+                {c.note && <span className="p-muted" style={{ display: 'block', fontSize: 12, marginTop: 2 }}>{c.note}</span>}
+              </span>
+              <span className={`ppill ${c.ok === false ? 'warn' : 'done'}`}>{c.ok === false ? 'Note' : 'OK'}</span>
+            </div>
+          ))}
+        </div>
       </div>
-    </Screen>
+    </OwnerLayout>
   )
 }

@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { OwnerLayout } from '../Shell'
 import { useAuth } from '../auth'
 import { createRequest } from '../data'
-import { OwnerNav, Screen, Toast, useToast } from '../components'
+import { Toast, useToast } from '../components'
 import { pushLocal } from '../notifications'
 
 const CATEGORIES = [
@@ -27,45 +28,33 @@ export default function RequestConcierge() {
     if (!user?.propertyId || !details.trim()) return
     setSending(true)
     createRequest(user.propertyId, user.name, category, details.trim())
-    // Confirmation ping to the owner; the operator gets their own push via the store.
-    await pushLocal({
-      title: 'Request received',
-      body: `We’ve got your "${category}" request and will be in touch.`,
-      url: '/owner',
-    })
+    await pushLocal({ title: 'Request received', body: `We’ve got your "${category}" request and will be in touch.`, url: '/owner' })
     show('Request sent to your concierge')
     setTimeout(() => navigate('/owner'), 900)
   }
 
   return (
-    <Screen nav={<OwnerNav />}>
-      <p className="script">how can we help?</p>
-      <h1 style={{ fontSize: 24, marginBottom: 16 }}>New Concierge Request</h1>
-
-      <div className="card">
-        <label>Service</label>
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          {CATEGORIES.map((c) => (
-            <option key={c}>{c}</option>
-          ))}
-        </select>
-
-        <label>Details</label>
-        <textarea
-          placeholder="Tell us what you need — dates, preferences, anything specific…"
-          value={details}
-          onChange={(e) => setDetails(e.target.value)}
-        />
-
-        <button className="btn" disabled={!details.trim() || sending} onClick={submit}>
-          {sending ? 'Sending…' : 'Send request'}
-        </button>
+    <OwnerLayout title="New Concierge Request" subtitle="Tell us how we can help.">
+      <div className="p-grid" style={{ gridTemplateColumns: '1.4fr 1fr' }}>
+        <div className="pcard">
+          <label>Service</label>
+          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+            {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
+          </select>
+          <label>Details</label>
+          <textarea placeholder="Tell us what you need — dates, preferences, anything specific…" value={details} onChange={(e) => setDetails(e.target.value)} />
+          <button className="pbtn" style={{ width: '100%' }} disabled={!details.trim() || sending} onClick={submit}>
+            {sending ? 'Sending…' : 'Send request'}
+          </button>
+        </div>
+        <div className="pcard" style={{ alignSelf: 'start' }}>
+          <div className="p-eyebrow" style={{ marginBottom: 8 }}>What happens next</div>
+          <p className="p-muted" style={{ fontSize: 14, lineHeight: 1.6 }}>
+            Your concierge is notified instantly and will follow up by text, email, or phone to confirm the details and take care of it.
+          </p>
+        </div>
       </div>
-
-      <p className="muted" style={{ fontSize: 13, textAlign: 'center' }}>
-        Your concierge is notified instantly and will follow up by text, email, or phone.
-      </p>
       <Toast msg={msg} />
-    </Screen>
+    </OwnerLayout>
   )
 }

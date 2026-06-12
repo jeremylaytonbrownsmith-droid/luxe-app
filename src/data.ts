@@ -273,10 +273,15 @@ function seed(): DB {
   }
 }
 
-let db: DB = load()
+// Declared before `db` so there's no temporal-dead-zone error when the initial
+// load runs at module evaluation.
 const listeners = new Set<() => void>()
+let version = 0
+let db: DB = initialLoad()
 
-function load(): DB {
+// Note: does NOT call save() — that would touch `db`/`listeners` while they're
+// still being initialized. It just returns the starting state.
+function initialLoad(): DB {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (raw) return JSON.parse(raw) as DB
@@ -284,12 +289,17 @@ function load(): DB {
     /* ignore */
   }
   const fresh = seed()
-  save(fresh)
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(fresh))
+  } catch {
+    /* ignore */
+  }
   return fresh
 }
 
 function save(next: DB) {
   db = next
+  version++
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
   } catch {
@@ -525,6 +535,9 @@ export function resetDemo() {
 }
 
 // ---- React binding ---------------------------------------------------------
+// The external snapshot is a stable version number (so useSyncExternalStore
+// never loops), and we recompute the selector on each render after subscribing.
 export function useStore<T>(selector: () => T): T {
-  return useSyncExternalStore(subscribe, selector, selector)
+  useSyncExternalStore(subscribe, () => version, () => version)
+  return selector()
 }

@@ -1,12 +1,7 @@
 // Brand assets for Local Luxe Concierge.
-//
-// The logo is currently referenced from the live Wix CDN so it shows up
-// immediately. For full offline/PWA support you can vendor the file later:
-//   1. Download the logo from Wix as a PNG (ideally transparent background)
-//   2. Save it to: public/brand/logo.png
-//   3. Change BRAND_LOGO below to: `${import.meta.env.BASE_URL}brand/logo.png`
-export const BRAND_LOGO =
-  'https://static.wixstatic.com/media/6096ed_b4f2c1dfba034e959ad5a8cd4a0619c5~mv2.jpg'
+// The logo (transparent PNG) is vendored at public/brand/logo.png, so it works
+// offline and is bundled with the PWA. Base-aware for local + GitHub Pages.
+export const BRAND_LOGO = `${import.meta.env.BASE_URL}brand/logo.png`
 
 // Brand palette pulled from the logo (navy + sage green) and the website.
 export const BRAND = {

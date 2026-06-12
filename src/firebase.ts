@@ -1,29 +1,29 @@
-// Firebase initialization with graceful DEMO-MODE fallback.
+// Firebase initialization.
 //
-// If the VITE_FIREBASE_* env vars are present, we boot a real Firebase app.
-// If they're blank (the default), `isDemo` is true and the app runs entirely
-// on the local seeded data layer — no network, fully presentable.
+// The web config below is safe to commit (it's public by design — Firebase
+// security is enforced by Auth + security rules, not by hiding these values).
+//
+// BACKEND_READY gates the cutover from demo data to the real Firebase backend.
+// It stays false until Auth + Firestore are wired in (Day 1), so the app keeps
+// running on seeded demo data until the live backend is ready and tested.
 
 import { initializeApp, type FirebaseApp } from 'firebase/app'
 
-const cfg = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+export const firebaseConfig = {
+  apiKey: 'AIzaSyBii95bnterdZzfWFJbjv0jMJpA8xR34UI',
+  authDomain: 'luxe-app-9c7af.firebaseapp.com',
+  projectId: 'luxe-app-9c7af',
+  storageBucket: 'luxe-app-9c7af.firebasestorage.app',
+  messagingSenderId: '630730180548',
+  appId: '1:630730180548:web:a358ee0e6b11badc7f4691',
 }
 
+// Flip to true once the real Auth/Firestore code paths are in place.
+export const BACKEND_READY = false
+export const isDemo = !BACKEND_READY
+
+// Web Push (FCM) key — set via env when we wire push on Day 2.
 export const vapidKey = import.meta.env.VITE_FIREBASE_VAPID_KEY as string | undefined
 
-export const isDemo = !cfg.apiKey || !cfg.projectId
-
-export const firebaseConfig = cfg
-
-let app: FirebaseApp | null = null
-if (!isDemo) {
-  app = initializeApp(cfg as Record<string, string>)
-}
-
-export { app }
+// Initialize now so the plumbing is ready; harmless while we're still on demo data.
+export const app: FirebaseApp = initializeApp(firebaseConfig)

@@ -40,7 +40,7 @@ export default function PropertyDetail() {
         </>
       }
     >
-      <div className="p-grid" style={{ gridTemplateColumns: '1.4fr 1fr' }}>
+      <div className="p-grid main">
         <div className="pcard" style={{ padding: 0, overflow: 'hidden' }}>
           {property.photoUrl && <img src={property.photoUrl} alt={property.name} style={{ width: '100%', height: 220, objectFit: 'cover' }} />}
           <div style={{ padding: 20 }}>

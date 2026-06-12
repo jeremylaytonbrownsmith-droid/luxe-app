@@ -35,7 +35,7 @@ export default function RequestConcierge() {
 
   return (
     <OwnerLayout title="New Concierge Request" subtitle="Tell us how we can help.">
-      <div className="p-grid" style={{ gridTemplateColumns: '1.4fr 1fr' }}>
+      <div className="p-grid main">
         <div className="pcard">
           <label>Service</label>
           <select value={category} onChange={(e) => setCategory(e.target.value)}>

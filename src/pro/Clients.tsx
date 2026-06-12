@@ -29,22 +29,21 @@ export default function Clients() {
         </>
       }
     >
-      <div className="list-head" style={{ gridTemplateColumns: '2fr 1.5fr 1.5fr 1fr 0.8fr' }}>
-        <span>Name</span><span>Property</span><span>Contact</span><span>Updated</span><span>Status</span>
+      <div className="list-head client-grid">
+        <span>Name</span><span className="col-hide">Property</span><span className="col-hide">Contact</span><span className="col-hide">Updated</span><span>Status</span>
       </div>
       {filtered.map((c) => {
         const prop = getProperty(c.propertyId)
         return (
-          <div key={c.id} className="prow" style={{ gridTemplateColumns: '2fr 1.5fr 1.5fr 1fr 0.8fr' }}
-            onClick={() => setSelected(c)}>
+          <div key={c.id} className="prow client-grid" onClick={() => setSelected(c)}>
             <div className="who">
               {c.photoUrl ? <img src={c.photoUrl} alt="" /> :
                 <div className="pro-avatar" style={{ background: '#eef1f4', color: '#6b7785', display: 'grid', placeItems: 'center', fontWeight: 700, fontSize: 13 }}>{initials(c.firstName, c.lastName)}</div>}
               <span className="nm">{c.firstName} {c.lastName}</span>
             </div>
-            <span className="p-muted" style={{ fontSize: 13 }}>{prop ? prop.name : 'Unassigned'}</span>
-            <span className="p-muted" style={{ fontSize: 13 }}>{c.email}</span>
-            <span className="p-muted" style={{ fontSize: 13 }}>{fmtDate(c.updatedAt)}</span>
+            <span className="p-muted col-hide" style={{ fontSize: 13 }}>{prop ? prop.name : 'Unassigned'}</span>
+            <span className="p-muted col-hide" style={{ fontSize: 13 }}>{c.email}</span>
+            <span className="p-muted col-hide" style={{ fontSize: 13 }}>{fmtDate(c.updatedAt)}</span>
             <span className={`ppill ${c.inviteStatus}`}>{c.inviteStatus}</span>
           </div>
         )

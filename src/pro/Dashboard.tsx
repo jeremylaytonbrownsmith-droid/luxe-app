@@ -31,7 +31,7 @@ export default function Dashboard() {
         <Link to="/pro/requests"><div className="stat gold"><div className="v">{s.openRequests}</div><div className="l">Open requests</div></div></Link>
       </div>
 
-      <div className="p-grid" style={{ gridTemplateColumns: '1fr 1fr' }}>
+      <div className="p-grid two">
         <div className="pcard">
           <div className="row" style={{ marginBottom: 12 }}>
             <h3>Upcoming home watch</h3>

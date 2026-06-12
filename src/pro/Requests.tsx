@@ -29,7 +29,7 @@ export default function Requests() {
 
   return (
     <ProLayout title="Concierge Requests" subtitle="Requests from your homeowners.">
-      <div className="p-grid" style={{ gridTemplateColumns: '1fr 1fr' }}>
+      <div className="p-grid two">
         {requests.map((r) => {
           const p = getProperty(r.propertyId)
           return (

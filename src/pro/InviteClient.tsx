@@ -10,6 +10,7 @@ import {
   useStore,
 } from '../data'
 import { pushLocal } from '../notifications'
+import { Icon } from '../icons'
 
 export default function InviteClient() {
   const { id = '' } = useParams()
@@ -120,11 +121,11 @@ export default function InviteClient() {
         {docs.length === 0 ? (
           <p className="p-muted" style={{ fontSize: 13 }}>No documents on this property yet.</p>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 10 }}>
             {docs.map((d) => (
               <label key={d.id} className={`share-row ${docIds.includes(d.id) ? 'on' : ''}`}>
                 <input type="checkbox" checked={docIds.includes(d.id)} onChange={() => toggle(docIds, setDocIds, d.id)} />
-                <span style={{ fontSize: 18 }}>📄</span>
+                <span style={{ color: 'var(--sage-deep)' }}><Icon name="document" size={18} /></span>
                 <span style={{ fontSize: 13, fontWeight: 600 }}>{d.name}</span>
               </label>
             ))}
@@ -144,7 +145,7 @@ export default function InviteClient() {
             Share all
           </label>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 10 }}>
           {experts.map((e) => (
             <label key={e.id} className={`share-row ${expertIds.includes(e.id) ? 'on' : ''}`}>
               <input type="checkbox" checked={expertIds.includes(e.id)} onChange={() => toggle(expertIds, setExpertIds, e.id)} />
@@ -161,7 +162,7 @@ export default function InviteClient() {
       {sent && (
         <div className="modal-bg" onClick={() => navigate('/pro/clients')}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <div style={{ fontSize: 40, marginBottom: 8 }}>✉️</div>
+            <div style={{ color: 'var(--sage-deep)', display: 'flex', justifyContent: 'center', marginBottom: 10 }}><Icon name="mail" size={40} /></div>
             <h3 style={{ marginBottom: 8 }}>Invitation sent to {sent}</h3>
             <p className="p-muted" style={{ fontSize: 14, marginBottom: 18 }}>
               They’ll get a text with a download link and verification code to get started.

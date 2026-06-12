@@ -12,7 +12,7 @@ export default function Account() {
 
   return (
     <OwnerLayout title="Account" subtitle="Your profile and preferences.">
-      <div className="p-grid" style={{ gridTemplateColumns: '1fr 1fr' }}>
+      <div className="p-grid two">
         <div className="pcard">
           <div className="p-eyebrow" style={{ marginBottom: 8 }}>Signed in as</div>
           <h3>{user?.name}</h3>

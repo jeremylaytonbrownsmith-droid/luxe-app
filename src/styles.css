@@ -214,6 +214,7 @@ select option { color: #000; }
   color: var(--p-ink);
   background: var(--p-bg);
   min-height: 100vh;
+  overflow-x: hidden;
   display: flex;
 }
 .pro * { box-sizing: border-box; }
@@ -257,8 +258,12 @@ select option { color: #000; }
 .pcard h3 { color: var(--p-ink); font-size: 18px; }
 .p-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--p-muted); font-weight: 700; }
 .p-muted { color: var(--p-muted); }
-.p-grid { display: grid; gap: 16px; }
+.p-grid { display: grid; gap: 16px; min-width: 0; }
+.p-grid > * { min-width: 0; } /* let children shrink instead of overflowing */
 .p-stats { grid-template-columns: repeat(4, 1fr); }
+/* Responsive two-column content layouts (use these instead of inline columns) */
+.p-grid.two { grid-template-columns: 1fr 1fr; }
+.p-grid.main { grid-template-columns: 1.5fr 1fr; }
 .stat { background: #fff; border: 1px solid var(--p-line); border-radius: 14px; padding: 18px; }
 .stat .v { font-family: var(--serif); font-size: 32px; font-weight: 700; color: var(--p-navy); }
 .stat .l { font-size: 12px; color: var(--p-muted); letter-spacing: 0.04em; margin-top: 2px; }
@@ -330,18 +335,36 @@ select option { color: #000; }
 .modal-bg { position: fixed; inset: 0; background: rgba(20,30,45,0.45); display: grid; place-items: center; z-index: 60; padding: 20px; }
 .modal { background: #fff; border-radius: 16px; padding: 26px; max-width: 420px; width: 100%; text-align: center; }
 
-/* Responsive: collapse sidebar to top bar */
+/* Client list table — responsive columns */
+.client-grid { display: grid; grid-template-columns: 2fr 1.5fr 1.5fr 1fr 0.8fr; }
+
+/* Tablet & below: collapse the sidebar to a top bar, stack two-col layouts */
 @media (max-width: 820px) {
   .pro { flex-direction: column; }
-  .pro-sidebar { position: sticky; width: 100%; flex-direction: row; align-items: center; padding: 10px 12px; overflow-x: auto; }
+  .pro-sidebar { position: sticky; top: 0; z-index: 30; width: 100%; flex-direction: row; align-items: center; padding: 10px 12px; overflow-x: auto; }
   .pro-logo { padding: 0 8px 0 0; }
-  .pro-logo-img { width: 100px; }
+  .pro-logo-img { width: 92px; }
   .pro-logo .s { display: none; }
   .pro-nav { flex-direction: row; margin: 0; }
   .pro-nav a span:not(.ic) { display: none; }
+  .pro-nav a { padding: 9px 11px; }
   .pro-sidebar .foot { margin: 0 0 0 auto; }
-  .pro-main { margin-left: 0; width: 100%; padding: 18px 16px 60px; }
-  .p-stats { grid-template-columns: 1fr 1fr; }
+  .pro-sidebar .foot button span, .pro-sidebar .foot button { font-size: 0; }
+  .pro-sidebar .foot button svg { width: 18px; height: 18px; }
+  .pro-main { margin-left: 0; width: 100%; padding: 18px 16px 48px; }
+  .p-grid.main, .p-grid.two { grid-template-columns: 1fr; }
   .field-grid, .field-grid-3 { grid-template-columns: 1fr; }
-  .pro-search input { width: 120px; }
+  .pro-head h1 { font-size: 22px; }
+  .pro-search input { width: 110px; }
+}
+
+/* Phones: shrink stats to 2-up and simplify the client table */
+@media (max-width: 560px) {
+  .p-stats { grid-template-columns: 1fr 1fr; }
+  .pro-main { padding: 16px 13px 48px; }
+  .pro-head { flex-wrap: wrap; }
+  .client-grid { grid-template-columns: 1fr auto; }
+  .client-grid .col-hide { display: none; }
+  .ptabs { overflow-x: auto; }
+  .modal { padding: 20px; }
 }

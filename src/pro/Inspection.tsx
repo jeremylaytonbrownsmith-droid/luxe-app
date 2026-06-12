@@ -57,7 +57,7 @@ export default function Inspection() {
       subtitle={property?.community}
       actions={<button className="pbtn ghost sm" onClick={() => navigate(-1)}>← Back</button>}
     >
-      <div className="p-grid" style={{ gridTemplateColumns: '1.3fr 1fr' }}>
+      <div className="p-grid main">
         <div className="pcard">
           <div className="row" style={{ marginBottom: 8 }}>
             <h3>Checklist</h3>

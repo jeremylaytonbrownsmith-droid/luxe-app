@@ -82,7 +82,7 @@ export default function OwnerHome() {
       </div>
 
       {/* Two-column content */}
-      <div className="p-grid" style={{ gridTemplateColumns: '1.5fr 1fr' }}>
+      <div className="p-grid main">
         <div>
           {lastReport && (
             <Link to={`/owner/report/${lastReport.id}`}>

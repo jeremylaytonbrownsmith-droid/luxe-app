@@ -19,7 +19,7 @@ export default function ReportView() {
       subtitle={`${visit.checklist.length}-point inspection`}
       actions={<button className="pbtn ghost sm" onClick={() => navigate(-1)}>← Back</button>}
     >
-      <div className="p-grid" style={{ gridTemplateColumns: '1.4fr 1fr' }}>
+      <div className="p-grid main">
         <div>
           {visit.summary && (
             <div className="pcard">
